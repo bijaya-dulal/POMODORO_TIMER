@@ -13,9 +13,14 @@ SHORT_BREAK_MIN = 5
 LONG_BREAK_MIN = 20
 reps = 0
 timer = None
+global already_start
+already_start = False
+
 
 # ------------------------- TIMER------------#
 def reset_timer():
+    global already_start
+    already_start = False
     global reps
     reps = 0
     window.after_cancel(timer)
@@ -26,23 +31,28 @@ def reset_timer():
 
 # ------------------------- TIMER MECHANISM ------------#
 def start_timer():
-    global reps
-    reps += 1
-    work_sec = WORK_MIN *60
-    short_break_sec = SHORT_BREAK_MIN * 60
-    long_break_sec = LONG_BREAK_MIN * 60
+    global already_start
+    check = already_start
+    if(is_already_start(check)):
+    
+        global reps
+        reps += 1
+        work_sec = WORK_MIN *60
+        short_break_sec = SHORT_BREAK_MIN * 60
+        long_break_sec = LONG_BREAK_MIN * 60
 
-    if reps % 8 == 0 :
-        count_down(long_break_sec)
-        title_label.config(text="Break", fg=RED)
+        if reps % 8 == 0 :
+            count_down(long_break_sec)
+            title_label.config(text="Break", fg=RED)
 
-    elif reps % 2 == 0:
-        count_down(short_break_sec)
-        title_label.config(text="Break", fg=PINK)
+        elif reps % 2 == 0:
+            count_down(short_break_sec)
+            title_label.config(text="Break", fg=PINK)
 
-    else:
-        count_down(work_sec)
-        title_label.config(text="Work", fg=GREEN)
+        else:
+            count_down(work_sec)
+            title_label.config(text="Work", fg=GREEN)
+
 # ------------------------- COUNTDOWN MECHANISM------------#
 def count_down(count):
     minute = math.floor(count / 60)
@@ -62,6 +72,15 @@ def count_down(count):
         for _ in range(working_session):
           mark += "√"
         check_mark.config(text = mark)
+
+#------------------- check if already start or not------------# 
+def is_already_start(started):
+    global already_start
+    if(started):
+        return False
+    else:
+        already_start = True
+        return True
 # ------------------------- UI SETUP ------------#
 
 window = tkinter.Tk()
