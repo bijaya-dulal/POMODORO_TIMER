@@ -1,5 +1,6 @@
 import tkinter
 import math
+from notification import play_sound
 
 # ------------------------- constant ------------#
 
@@ -8,7 +9,7 @@ RED = "#e7305b"
 GREEN = "#9bdeac"
 YELLOW = "#f7f5dd"
 FONT_NAME = "Courier"
-WORK_MIN =25
+WORK_MIN = 1
 SHORT_BREAK_MIN = 5
 LONG_BREAK_MIN = 20
 reps = 0
@@ -31,6 +32,7 @@ def reset_timer():
 
 # ------------------------- TIMER MECHANISM ------------#
 def start_timer():
+    play_sound("notification.wav")
     global already_start
     check = already_start
     if(is_already_start(check)):
